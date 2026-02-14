@@ -13,7 +13,7 @@ jobs:
       mongodb:
         image: mongo:4.4
         options: >-
-          --health-cmd mongosh
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
