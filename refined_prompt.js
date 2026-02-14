@@ -78,8 +78,11 @@ function toCamelCase(input) {
   const str = String(input).trim();
   if (!str) return '';
 
+  // First, handle camelCase by inserting a separator before uppercase letters that follow lowercase letters
+  let normalized = str.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+  
   // Split on word boundaries (spaces, hyphens, underscores)
-  const parts = str.split(/[\s\-_]+/).filter(Boolean);
+  const parts = normalized.split(/[\s\-_]+/).filter(Boolean);
   if (parts.length === 0) return '';
 
   // First word lowercase, subsequent words capitalized
