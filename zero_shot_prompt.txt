@@ -1,0 +1,20 @@
+# Zero-shot Prompt for camelCase Conversion Function
+
+Here's a prompt to help generate a camelCase conversion function:
+
+---
+
+Write a function that converts a string to camelCase format. The function should:
+- Take a string as input that may contain spaces, hyphens, or underscores as separators
+- Convert the string so that the first word is lowercase and each subsequent word starts with an uppercase letter, with no separators between words
+- Remove all separators (spaces, hyphens, underscores)
+- Handle edge cases like empty strings or strings with only separators
+
+Example:
+- Input: "hello world" → Output: "helloWorld"
+- Input: "convert-this-string" → Output: "convertThisString"
+- Input: "another_example_here" → Output: "anotherExampleHere"
+
+---
+
+You can save this prompt to your file, or I can generate the actual code if you'd like!
