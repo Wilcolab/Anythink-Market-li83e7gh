@@ -1,77 +1,42 @@
-"use strict";
-
-function assertString(value, name) {
-  if (typeof value !== "string") {
-    throw new TypeError(`${name} must be a string`);
-  }
-}
-
-function splitWords(value) {
-  const withBoundaries = value
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/[_\-.\s]+/g, " ")
-    .replace(/[^a-zA-Z0-9\s]/g, " ")
-    .trim();
-
-  if (withBoundaries.length === 0) {
-    return [];
-  }
-
-  return withBoundaries.split(/\s+/g);
-}
-
-/**
- * Convert a string to camelCase.
- *
- * @param {string} input - The string to convert.
- * @returns {string} The camelCased string.
- * @throws {TypeError} When input is not a string.
- * @example
- * toCamelCase("hello world"); // "helloWorld"
- * @example
- * toCamelCase("user_id"); // "userId"
- */
 function toCamelCase(input) {
-  assertString(input, "input");
-  const words = splitWords(input);
+    if (typeof input !== 'string') {
+        throw new Error('Input must be a string');
+    }
 
-  if (words.length === 0) {
-    return "";
-  }
-
-  const [first, ...rest] = words;
-  const firstLower = first.toLowerCase();
-  const restCased = rest.map((word) => {
-    const lower = word.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  });
-
-  return [firstLower, ...restCased].join("");
+    return input
+        .toLowerCase()
+        .split(/[\s-_]+/) // Split by spaces, hyphens, or underscores
+        .map((word, index) => {
+            if (index === 0) {
+                return word; // Keep the first word lowercase
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1); // Capitalize the first letter of subsequent words
+        })
+        .join('');
 }
 
-/**
- * Convert a string to dot.case.
- *
- * @param {string} input - The string to convert.
- * @returns {string} The dot.cased string.
- * @throws {TypeError} When input is not a string.
- * @example
- * toDotCase("hello world"); // "hello.world"
- * @example
- * toDotCase("SCREEN_NAME"); // "screen.name"
- */
+// Examples
+console.log(toCamelCase('first name')); // firstName
+console.log(toCamelCase('user_id')); // userId
+console.log(toCamelCase('SCREEN_NAME')); // screenName
+console.log(toCamelCase('mobile-number')); // mobileNumber
+console.log(toCamelCase('multiple separators_here-and there')); // multipleSeparatorsHereAndThere
+
 function toDotCase(input) {
-  assertString(input, "input");
-  const words = splitWords(input);
+    if (typeof input !== 'string') {
+        throw new Error('Input must be a string');
+    }
 
-  if (words.length === 0) {
-    return "";
-  }
-
-  return words.map((word) => word.toLowerCase()).join(".");
+    return input
+        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
+        .toLowerCase()
+        .split(/[\s-_]+/) // Split by spaces, hyphens, or underscores
+        .join('.');
 }
 
-module.exports = {
-  toCamelCase,
-  toDotCase,
-};
+// Examples
+console.log(toDotCase('first name')); // first.name
+console.log(toDotCase('user_id')); // user.id
+console.log(toDotCase('SCREEN_NAME')); // screen.name
+console.log(toDotCase('mobile-number')); // mobile.number
+console.log(toDotCase('multiple separators_here-and there')); // multiple.separators.here.and.there
